@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Google Maps JavaScript API -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCK2tZwA7IQM_uKCg527Sr2hyLd8eSo4QM" defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY" defer></script>
 
   <script>
     let map;
@@ -100,6 +100,7 @@
 
     function fetchNearbyRestaurants(userLocation) {
       const nearbyRestaurants = searchRadius === 'all' ? restaurants : restaurants.filter((restaurant) => {
+        if (!restaurant.Latitude || !restaurant.Longitude) return false;
         const restaurantLocation = {
           lat: restaurant.Latitude,
           lng: restaurant.Longitude
@@ -108,6 +109,7 @@
       });
 
       const nearbyGroupRestaurants = searchRadius === 'all' ? restaurantsGroup : restaurantsGroup.filter((restaurant) => {
+        if (!restaurant.Latitude || !restaurant.Longitude) return false;
         const restaurantLocation = {
           lat: restaurant.Latitude,
           lng: restaurant.Longitude
@@ -167,6 +169,8 @@
 
       // Display individual restaurants
       restaurants.forEach((restaurant) => {
+        if (!restaurant.Latitude || !restaurant.Longitude) return;
+
         let restaurantDiv = document.createElement('div');
         restaurantDiv.className = 'restaurant-item';
         restaurantDiv.innerHTML = `<div class="restaurant-name">${restaurant['Restaurant Name']}</div><div class="restaurant-address">- Cusisines: ${restaurant['Cuisines']} <br> - Price Range: ${restaurant['Price Range']}</div>`;
@@ -220,6 +224,8 @@
 
       // Display group restaurants with yellow color in the sidebar
       groupRestaurants.forEach((restaurant) => {
+        if (!restaurant.Latitude || !restaurant.Longitude) return;
+
         let restaurantDiv = document.createElement('div');
         restaurantDiv.className = 'restaurant-item group';
         restaurantDiv.innerHTML = `<div class="restaurant-name">${restaurant['Restaurant Name']}</div><div class="restaurant-address">${restaurant['Cuisines']} <br> - Price Range: ${restaurant['Price Range']}</div>`;
